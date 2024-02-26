@@ -18,7 +18,7 @@ def index():
 
 @app.route('/analysis/<ticker>')
 def analysis(ticker):
-    API_flag = ''
+    API_flag = 'no'
     stock_data = StockData(ticker, API_flag)
     data = stock_data.retrieve_data()
 

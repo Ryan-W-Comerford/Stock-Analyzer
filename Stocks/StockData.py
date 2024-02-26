@@ -121,7 +121,7 @@ class StockData:
         return data
 
     def retrieve_data(self):
-        if self.API_flag.lower() == 'api':
+        if self.API_flag.lower() == 'yes':
             data = self.API_Data()
         else:
             data = self.Local_Data()
