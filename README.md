@@ -6,4 +6,4 @@ This is a high-level design and implementation meant to show my understanding of
 
 To run the local project, first disable (as "no") or enable (as "yes") the API flag manually in app.py, since the API does have limits and can halt the program if limit is exceeded.
 
-Then run app.py and go to your local server.
+Then run "python app.py" and go to your local server.
