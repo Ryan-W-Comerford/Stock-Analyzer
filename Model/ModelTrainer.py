@@ -48,7 +48,7 @@ class ModelTrainer:
         print(y)
 
         #set the test data and then temp data to be paritioned more
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=random.randint(1,1000))
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=random.randint(1,1000))
         
         #Fit with training data
         linear_model = LinearRegression()
@@ -68,18 +68,18 @@ class ModelTrainer:
         print(f"Predicted Values are...{prediction}")
 
         diff = ((prediction - y_test) / y_test) * 100
-        accuracy = diff.mean()
+        accuracy = round(diff.mean(), 2)
 
         if accuracy < 0:
             value = 'Over'
             if accuracy > -20:
-                strength = 'Weakly'
+                strength = 'Slightly'
             else:
                 strength = 'Strongly'
         else:
             value = 'Under'
             if accuracy < 20:
-                strength = 'Weakly'
+                strength = 'Slightly'
             else:
                 strength = 'Strongly'
 

@@ -9,13 +9,13 @@
 <body>
     <div class="animated-background"></div>
     <div class="content-container">
-        <h1>{{ticker}} Analysis</h1>
+        <h2>{{ticker}} Analysis</h2>
         <div id="graph-container">
             <div id="graph"></div>
         </div>
         <div class="accuracy-container">
-            <div class="accuracy">The Model's predicted values were {{accuracy}}% off to the actual values!</div>
-            <div class="value">Based on our Models, {{ticker}} appears to be {{strength}} {{value}}valued!</div>
+            <div class="accuracy">On average, our model's predicted values were off to the actual values by a difference of {{accuracy}}%!</div>
+            <div class="value">Based on our models, {{ticker}} appears to be {{strength}} {{value}}valued!</div>
         </div>
     </div>
     <script type="text/javascript">
