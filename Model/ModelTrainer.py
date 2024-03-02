@@ -14,7 +14,7 @@ class ModelTrainer:
     def __init__(self, data):
         self.data = data
         self.target_columns = '4. close'
-        self.feature_columns = ['Oasis'] 
+        self.feature_columns = ['TotalValue'] 
 
     def calculate_value(self, row):
         eps = 3.0
@@ -29,14 +29,14 @@ class ModelTrainer:
         debt_asset_ratio_value = (float(row['totalLiabilities']) / max(float(row['totalAssets']), 1)) * debt_asset_ratio
         gross_profit_margin_value = (float(row['grossProfit']) / max(float(row['totalRevenue']), 1)) * gross_profit_margin
         
-        oasis_value = (eps_value + surprise_value + revenue_value
+        total_value = (eps_value + surprise_value + revenue_value
                         + debt_asset_ratio_value + gross_profit_margin_value)
 
-        return oasis_value
+        return total_value
     
     def prepare_data(self):
         self.data.fillna(0, inplace=True)
-        self.data['Oasis'] = self.data.apply(self.calculate_value, axis=1)
+        self.data['TotalValue'] = self.data.apply(self.calculate_value, axis=1)
 
     def run_model(self):
         self.prepare_data()
