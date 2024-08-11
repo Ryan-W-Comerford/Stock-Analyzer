@@ -1,6 +1,7 @@
 from pandas import json_normalize
 import pandas as pd
 import requests
+import json
 
 class StockData: 
     def __init__(self, alpha_api_key, ticker, api_flag):
@@ -30,6 +31,10 @@ class StockData:
         try:
             stock_request = requests.get(self.STOCK_URL)
             stock_json = stock_request.json()
+            with open('Error/error.json', 'r') as file:
+                error_json = json.load(file)
+                if stock_json == error_json:
+                    raise Exception("API Limit Has Been Reached for this API Key. Try Re-Running App using Local Data.")
             stock_json = stock_json['Time Series (Daily)']
             stock_data = pd.DataFrame(stock_json).T
             stock_data.reset_index(inplace=True)
