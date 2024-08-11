@@ -1,23 +1,21 @@
-from alpha_vantage.timeseries import TimeSeries
 from pandas import json_normalize
 import pandas as pd
 import requests
-import json
-import yfinance as yf
-
-ALPHA_API_KEY = 'G19UUP8U9FI78HPZ'
 
 class StockData: 
-    def __init__(self, ticker, API_flag):
+    def __init__(self, alpha_api_key, ticker, api_flag):
         self.ticker = ticker
-        self.API_flag = API_flag
+        self.api_flag = api_flag
         self.URL = 'https://www.alphavantage.co'
-        self.STOCK_URL = self.URL + "/query?function=TIME_SERIES_DAILY&symbol=" + self.ticker + "&apikey=" + ALPHA_API_KEY + "&outputsize=full"
-        self.EARNINGS_URL = self.URL + "/query?function=EARNINGS&symbol=" + self.ticker + "&apikey=" + ALPHA_API_KEY 
-        self.INFO_URL = self.URL + "/query?function=OVERVIEW&symbol=" + self.ticker + "&apikey=" + ALPHA_API_KEY
-        self.INCOME_URL = self.URL + "/query?function=INCOME_STATEMENT&symbol=" + self.ticker + "&apikey=" + ALPHA_API_KEY 
-        self.BALANCE_URL = self.URL + "/query?function=BALANCE_SHEET&symbol=" + self.ticker + "&apikey=" + ALPHA_API_KEY 
-        self.CASH_URL = self.URL + "/query?function=CASH_FLOW&symbol=" + self.ticker + "&apikey=" + ALPHA_API_KEY  
+        self.STOCK_URL = self.URL + "/query?function=TIME_SERIES_DAILY&symbol=" + self.ticker + "&apikey=" + alpha_api_key + "&outputsize=full"
+        self.EARNINGS_URL = self.URL + "/query?function=EARNINGS&symbol=" + self.ticker + "&apikey=" + alpha_api_key 
+        self.INFO_URL = self.URL + "/query?function=OVERVIEW&symbol=" + self.ticker + "&apikey=" + alpha_api_key
+        self.INCOME_URL = self.URL + "/query?function=INCOME_STATEMENT&symbol=" + self.ticker + "&apikey=" + alpha_api_key 
+        self.BALANCE_URL = self.URL + "/query?function=BALANCE_SHEET&symbol=" + self.ticker + "&apikey=" + alpha_api_key 
+        self.CASH_URL = self.URL + "/query?function=CASH_FLOW&symbol=" + self.ticker + "&apikey=" + alpha_api_key  
+
+    def retrieve_data(self):
+        return self.API_Data() if self.api_flag.lower() == 'yes' else self.Local_Data()
 
     def Local_Data(self):
         try:
@@ -117,13 +115,5 @@ class StockData:
 
         print("Final Training Data is...")
         print(data)
-
-        return data
-
-    def retrieve_data(self):
-        if self.API_flag.lower() == 'yes':
-            data = self.API_Data()
-        else:
-            data = self.Local_Data()
 
         return data

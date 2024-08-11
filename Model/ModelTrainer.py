@@ -1,10 +1,6 @@
-import keras
-import tensorflow as tf
-from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
-from sklearn.utils import shuffle
-import matplotlib.pyplot as plt
 import numpy as np
 import random
 import pandas as pd
@@ -41,24 +37,17 @@ class ModelTrainer:
     def run_model(self):
         self.prepare_data()
 
-        #set feature (X) and target (y) columns -> y is what you want to predict
         X = self.data[self.feature_columns]
-        print(X)
         y = self.data[self.target_columns]
-        print(y)
 
-        #set the test data and then temp data to be paritioned more
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=random.randint(1,1000))
         
-        #Fit with training data
         linear_model = LinearRegression()
         linear_model.fit(X_train, y_train)
 
         print("Testing...")
-        #predict for the test
         prediction = linear_model.predict(X_test)
 
-        #calculate MSE/RMSE for testing
         test_mse = mean_squared_error(y_test, prediction)
         test_rmse = np.sqrt(test_mse)
 
@@ -87,7 +76,6 @@ class ModelTrainer:
 
     @staticmethod
     def plot(y_test, y_pred, ticker):
-        # Create a DataFrame using x_values and y_values
         data = pd.DataFrame({
             'Actual Stock Price': y_test,
             'Predicted Stock Price': y_pred
