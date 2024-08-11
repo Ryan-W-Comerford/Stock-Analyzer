@@ -1,9 +1,9 @@
+from Model.ModelTrainer import ModelTrainer
+from Stocks.StockData import StockData
+from Stocks.ApiInfo import ApiInfo
 from flask import Flask, render_template, request, redirect, url_for
 import plotly
 import json
-from Model.ModelTrainer import ModelTrainer
-from Stocks.StockData import StockData
-import argparse
 
 app = Flask(__name__)
 
@@ -16,6 +16,7 @@ def index():
 
 @app.route('/analysis/<ticker>')
 def analysis(ticker):
+    api_flag, api_key = ApiInfo.get_api_info()
     stock_data = StockData(api_key, ticker, api_flag)
     data = stock_data.retrieve_data()
 
@@ -30,14 +31,3 @@ def analysis(ticker):
 @app.errorhandler(Exception)
 def handle_exception(e):
     return render_template("error.html", e=e), 500
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--api_flag', required=True)
-    parser.add_argument('--api_key')
-    args = parser.parse_args()
-
-    api_flag = args.api_flag
-    api_key = args.api_key if args.api_key else ""
-
-    app.run(port=5001, debug=True)

@@ -1,10 +1,10 @@
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
+import plotly.express as px
 import numpy as np
 import random
 import pandas as pd
-import plotly.express as px
 
 class ModelTrainer:     
     def __init__(self, data):
