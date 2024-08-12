@@ -31,7 +31,7 @@ class ModelTrainer:
         return total_value
     
     def prepare_data(self):
-        self.data.replace('None', pd.NA)
+        self.data.replace('None', pd.NA, inplace=True)
         self.data.fillna(0, inplace=True)
         self.data['TotalValue'] = self.data.apply(self.calculate_value, axis=1)
 
