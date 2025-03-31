@@ -31,7 +31,6 @@ class StockData:
         try:
             stock_request = requests.get(self.STOCK_URL)
             stock_json = stock_request.json()
-            print(stock_json)
             if "Information" in stock_json:
                 if "rate limit" in stock_json["Information"]:
                     raise Exception("API Limit Has Been Reached for this API Key. Try Re-Running App using Local Data.")
