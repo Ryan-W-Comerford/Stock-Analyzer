@@ -12,7 +12,7 @@ If api flag is "no" the given ticker's CSV data must exist to be successful. If 
 ## How To Run
 ``` python
 #If using the API
-python3 main.py --api_flag yes --api_key YOUR_ALPHA_API_KEY
+python3 app/main.py --api_flag yes --api_key YOUR_ALPHA_API_KEY
 #If using Local Data
-python3 main.py --api_flag no
+python3 app/main.py --api_flag no
 ```

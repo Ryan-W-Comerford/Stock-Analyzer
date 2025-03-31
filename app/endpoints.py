@@ -1,6 +1,6 @@
-from Model.ModelTrainer import ModelTrainer
-from Stocks.StockData import StockData
-from Stocks.ApiInfo import ApiInfo
+from model.model_trainer import ModelTrainer
+from stocks.stock_data import StockData
+from stocks.api_info import ApiInfo
 from flask import Flask, render_template, request, redirect, url_for
 import plotly
 import json
@@ -17,6 +17,7 @@ def index():
 @app.route('/analysis/<ticker>')
 def analysis(ticker):
     api_flag, api_key = ApiInfo.get_api_info()
+    print(api_key, ticker, api_flag)
     stock_data = StockData(api_key, ticker, api_flag)
     data = stock_data.retrieve_data()
 

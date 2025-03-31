@@ -16,24 +16,24 @@ class StockData:
         self.CASH_URL = self.URL + "/query?function=CASH_FLOW&symbol=" + self.ticker + "&apikey=" + alpha_api_key  
 
     def retrieve_data(self):
-        return self.API_Data() if self.api_flag.lower() == 'yes' else self.Local_Data()
+        return self.api_data() if self.api_flag.lower() == 'yes' else self.local_data()
 
-    def Local_Data(self):
+    def local_data(self):
         try:
-            path = 'Data/InputData/' + self.ticker + '.csv'
+            path = 'data/InputData/' + self.ticker + '.csv'
             data = pd.read_csv(path)
         except Exception as e:
-            raise Exception(e)
+            raise Exception(f"Error reading local data for ticker '{self.ticker}'...Please ensure that ticker's data exists")
 
         return data
 
-    def API_Data(self):
+    def api_data(self):
         try:
             stock_request = requests.get(self.STOCK_URL)
             stock_json = stock_request.json()
-            with open('Error/error.json', 'r') as file:
-                error_json = json.load(file)
-                if stock_json == error_json:
+            print(stock_json)
+            if "Information" in stock_json:
+                if "rate limit" in stock_json["Information"]:
                     raise Exception("API Limit Has Been Reached for this API Key. Try Re-Running App using Local Data.")
             stock_json = stock_json['Time Series (Daily)']
             stock_data = pd.DataFrame(stock_json).T
@@ -115,7 +115,7 @@ class StockData:
         print("Merge Data is...")
         print(data)
 
-        merged_file_name = f'Data/InputData/{self.ticker}.csv'
+        merged_file_name = f'data/InputData/{self.ticker}.csv'
         data.to_csv(merged_file_name)
 
         print("Final Training Data is...")
